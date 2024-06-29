@@ -1,0 +1,132 @@
+body {
+  word-wrap: break-word;
+  background-attachment: fixed;
+  background-image: linear-gradient(
+    315deg,
+    #7661b6,
+    #f4bf8e 20.83%,
+    #405cad 52.6%,
+    #6cb8ff 76.56%,
+    #2d539d
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: Facto, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.parent-container {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 30px;
+  overflow: auto;
+  padding: 20px;
+  .title-content {
+    display: flex;
+    justify-content: center;
+    .task-title {
+      width: 100%;
+      position: relative;
+      .add-new {
+        position: absolute;
+        right: 10px;
+        background: #3e66b0;
+        margin-right: 5px;
+        border: none;
+        border-radius: 3px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 5px 10px;
+      }
+    }
+  }
+  .task-body {
+    margin: 10px 0;
+    overflow-y: auto;
+    padding-bottom: 3px;
+    .item-table {
+      border-collapse: collapse;
+      width: 100%;
+      .table-header {
+        tr {
+          th:first-child {
+            min-width: 10px;
+          }
+          th:last-child {
+            min-width: 20px;
+          }
+          th {
+            background: #ebebeb;
+            border: 1px solid #fff;
+            min-width: 200px;
+            padding: 5px;
+            text-align: left;
+          }
+        }
+      }
+      .table-body {
+        tr {
+          td:first-child {
+            min-width: 10px;
+          }
+          td:last-child {
+            min-width: 20px;
+          }
+          td {
+            input,
+            select,
+            textarea {
+              width: 90%;
+              background: #fff;
+              border: 1px solid #e1e1e1;
+              border-radius: 5px;
+              color: #000;
+              padding: 6px;
+              margin: 2px 5px;
+            }
+            .file-upload {
+              display: flex;
+              align-items: center;
+              .file-upload-lable {
+                justify-content: center;
+                width: calc(100% - 40px);
+                .choose-files {
+                  border: 1px solid #3e66b0;
+                  cursor: pointer;
+                  display: flex;
+                  justify-content: center;
+                  padding: 2px 5px;
+                  width: 90%;
+                  img {
+                    margin-right: 5px;
+                    width: 20px;
+                  }
+                }
+              }
+
+              ul {
+                list-style-type: none;
+                padding: 0;
+              }
+
+             
+            }
+          }
+        }
+      }
+    }
+  }
+  .submit-button {
+    background: #3e66b0;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+}
