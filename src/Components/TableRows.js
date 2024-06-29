@@ -1,5 +1,8 @@
 import Upload from "../Assets/Images/upload.png";
 import { data } from "../Common/config";
+import closeImg from "../Assets/Images/x.png";
+import deleteImg from "../Assets/Images/delete.png";
+
 
 function TableRows({
   deleteTaskImage,
@@ -7,9 +10,9 @@ function TableRows({
   handleChange,
   deleteTask,
   taskData,
+  handleImageClick
 }) {
   const baseApiUrl = data?.apiBaseUrl;
-  console.log("hhhhhhhh", baseApiUrl);
   return taskData.map((data, index) => {
     let { date, description, heading, time, image, priority, id } = data;
     return (
@@ -71,13 +74,13 @@ function TableRows({
             <div className="file-upload">
               {image.length > 0 ? (
                 <>
-                  <div className="cache-image-container">
+                  <div className="cache-image-container" onClick={(e) => handleImageClick(index,e)}>
                     {image &&
                       image.map((file, i) => (
                         <img
                           key={i}
                           src={`${baseApiUrl}/${file}`}
-                          alt={`image-${i}`}
+                          alt={`image-${i}`} 
                         />
                       ))}
                   </div>
@@ -105,7 +108,7 @@ function TableRows({
                         title={file}
                         onClick={() => deleteTaskImage(index, i)}
                       >
-                        X
+                        <img className="delete-task-img" src={deleteImg} alt="delete" />
                       </li>
                     );
                   })}
@@ -132,8 +135,8 @@ function TableRows({
             </ol> */}
           </td>
 
-          <td>
-            <span onClick={() => deleteTask(index)}>X</span>
+          <td className="delete-task">
+            <span onClick={() => deleteTask(index)}><img src={closeImg} alt="delete"/></span>
           </td>
         </tr>
       </>

@@ -7,9 +7,13 @@ import {
   getAllTask,
   updateTask,
 } from "../Service/taskApiService.js";
+import TaskImgPopup from "./TaskImgPopup.js";
 
 function Task() {
   const [taskData, setTaskData] = useState([]);
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [individualTaskData, setIndividualTaskData] = useState({});
+
   useEffect(() => {
     getAllTask()
       .then((response) => {
@@ -115,7 +119,6 @@ function Task() {
 
           taskData[index].image = array;
           taskData[index].flag = true;
-          console.log("taskData", taskData);
           setTaskData([...taskData]);
         })
         .catch((err) => {
@@ -137,69 +140,91 @@ function Task() {
       .catch((err) => {});
   };
 
-  {
-    console.log("task", taskData);
-  }
+  const handleImageClick = (index, event) => {
+    console.log("hiii sfq");
+    const rowsInput = [...taskData];
+    let popupData = {
+      image: rowsInput[index]["image"],
+      heading: rowsInput[index]["heading"],
+      description: rowsInput[index]["description"],
+    };
+    setIndividualTaskData({ ...popupData });
+    setShowPopUp(true);
+  };
   return (
-    <div className="parent-container">
-      <form>
-        <div>
-          <div className="title-content">
-            <h3 className="task-title">
-              Add your Task
-              <button type="button" className="add-new" onClick={addTaskToList}>
-                Add Task
-              </button>
-            </h3>
-          </div>
-          <div className="task-body">
-            <table className="item-table">
-              <thead className="table-header">
-                <tr>
-                  <th>S.No</th>
-                  <th>Date</th>
-                  <th>Heading</th>
-                  <th>Description</th>
-                  <th>Priority</th>
-                  <th>Time</th>
-                  <th>Image</th>
+    <>
+      {showPopUp && (
+        <TaskImgPopup
+          setShowPopUp={setShowPopUp}
+          individualTaskData={individualTaskData}
+        />
+      )}
 
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody className="table-body">
-                {taskData.length > 0 && (
-                  <TableRows
-                    taskData={taskData}
-                    deleteTask={deleteTask}
-                    handleChange={handleChange}
-                    uploadTaskImage={uploadTaskImage}
-                    deleteTaskImage={deleteTaskImage}
-                  />
-                )}
-                {taskData.length === 0 && (
-                  <>
-                    <tr>
-                      <td className="text-center" colSpan={5}>
-                        No Task added.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={5}>
-                        Please add atleast one item to continue.
-                      </td>
-                    </tr>
-                  </>
-                )}
-              </tbody>
-            </table>
+      <div className="parent-container">
+        <form>
+          <div>
+            <div className="title-content">
+              <h3 className="task-title">
+                Add your Task
+                <button
+                  type="button"
+                  className="add-new"
+                  onClick={addTaskToList}
+                >
+                  Add Task
+                </button>
+              </h3>
+            </div>
+            <div className="task-body">
+              <table className="item-table">
+                <thead className="table-header">
+                  <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Heading</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Time</th>
+                    <th>Image</th>
+
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody className="table-body">
+                  {taskData.length > 0 && (
+                    <TableRows
+                      taskData={taskData}
+                      deleteTask={deleteTask}
+                      handleChange={handleChange}
+                      uploadTaskImage={uploadTaskImage}
+                      deleteTaskImage={deleteTaskImage}
+                      handleImageClick={handleImageClick}
+                    />
+                  )}
+                  {taskData.length === 0 && (
+                    <>
+                      <tr>
+                        <td className="text-center" colSpan={5}>
+                          No Task added.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={5}>
+                          Please add atleast one item to continue.
+                        </td>
+                      </tr>
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <button className="submit-button" onClick={submitTask}>
+              Submit
+            </button>
           </div>
-          <button className="submit-button" onClick={submitTask}>
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 }
 
