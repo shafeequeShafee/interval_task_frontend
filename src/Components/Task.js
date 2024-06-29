@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import TableRows from "./TableRows";
 import { toast } from "react-toastify";
-import moment from "moment"
+import moment from "moment";
 import {
   uploadTaskImageApiService,
   getAllTask,
+  updateTask,
 } from "../Service/taskApiService.js";
 
 function Task() {
@@ -25,11 +26,11 @@ function Task() {
                 time: data?.time,
                 priority: data?.priority,
                 image: images,
+                flag: false,
               };
               taskList.push(task);
             });
-            setTaskData([...taskList])
-
+          setTaskData([...taskList]);
         } else {
           toast.warning("No data found");
         }
@@ -47,6 +48,7 @@ function Task() {
       time: "",
       priority: "",
       image: [],
+      flag: false,
     });
     setTaskData([...taskData]);
   };
@@ -61,6 +63,7 @@ function Task() {
     const { name, value } = event.target;
     const rowsInput = [...taskData];
     rowsInput[index][name] = value;
+    rowsInput[index]["flag"] = true;
     setTaskData(rowsInput);
   };
 
@@ -104,11 +107,14 @@ function Task() {
           let data = response?.data?.response.split(",");
           event.target.value = "";
           let array = [...taskData[index].image];
+
           array = [];
           data.map((file) => {
             array.push(file);
           });
+
           taskData[index].image = array;
+          taskData[index].flag = true;
           console.log("taskData", taskData);
           setTaskData([...taskData]);
         })
@@ -116,6 +122,19 @@ function Task() {
           toast.error("Something went wrong, Please try later.", err);
         });
     }
+  };
+
+  const submitTask = (e) => {
+    e.preventDefault();
+    updateTask(taskData)
+      .then((response) => {
+        if (response?.status === 200) {
+          toast.success("Saved succesfully");
+        } else {
+          toast.error("Something went while updating task");
+        }
+      })
+      .catch((err) => {});
   };
 
   {
@@ -175,7 +194,9 @@ function Task() {
               </tbody>
             </table>
           </div>
-          <button className="submit-button">Submit</button>
+          <button className="submit-button" onClick={submitTask}>
+            Submit
+          </button>
         </div>
       </form>
     </div>

@@ -13,6 +13,16 @@ export const getAllTask = async () => {
     return null;
   }
 };
+
+export const updateTask = async (data) => {
+  try {
+    const response = await axios.post(apiEndPoints.updateTaskApi, data);
+    return response?.data;
+  } catch (error) {
+    toast.error(`Something went wrong while updating Task: ${error.message}`);
+    return null;
+  }
+};
 export const uploadTaskImageApiService = async (data) => {
   try {
     const headers = {
