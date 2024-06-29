@@ -1,5 +1,5 @@
 import Upload from "../Assets/Images/upload.png";
-// import { ReactComponent as Trash } from "../../Assets/Images/icons/trash.svg";
+import { data } from "../Common/config";
 
 function TableRows({
   deleteTaskImage,
@@ -8,7 +8,8 @@ function TableRows({
   deleteTask,
   taskData,
 }) {
-  console.log("hhhhhhhh", taskData);
+  const baseApiUrl = data?.apiBaseUrl;
+  console.log("hhhhhhhh", baseApiUrl);
   return taskData.map((data, index) => {
     let { date, description, heading, time, image, priority, id } = data;
     return (
@@ -68,12 +69,32 @@ function TableRows({
 
           <td>
             <div className="file-upload">
-              <div className="file-upload-lable">
-                <label htmlFor={"taskImage_" + index} className="choose-files">
-                  <img src={Upload} alt="upload" />
-                  <span>Choose File</span>
-                </label>
-              </div>
+              {image.length > 0 ? (
+                <>
+                  <div className="cache-image-container">
+                    {image &&
+                      image.map((file, i) => (
+                        <img
+                          key={i}
+                          src={`${baseApiUrl}/${file}`}
+                          alt={`image-${i}`}
+                        />
+                      ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="file-upload-lable">
+                    <label
+                      htmlFor={"taskImage_" + index}
+                      className="choose-files"
+                    >
+                      <img src={Upload} alt="upload" />
+                      <span>Choose File</span>
+                    </label>
+                  </div>
+                </>
+              )}
 
               <ul>
                 {image &&
@@ -99,7 +120,7 @@ function TableRows({
               accept=".png,.jpeg,.jpg"
               hidden
             />
-            <ol>
+            {/* <ol>
               {image &&
                 image.map((file, i) => {
                   return (
@@ -108,7 +129,7 @@ function TableRows({
                     </li>
                   );
                 })}
-            </ol>
+            </ol> */}
           </td>
 
           <td>

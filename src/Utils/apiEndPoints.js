@@ -1,6 +1,6 @@
-let apiBaseUrl = "http://localhost:4000";
+import { data } from "../Common/config";
 export const apiEndPoints = {
-  uploadTaskImageApi: apiBaseUrl + "/task-router/upload-task-image",
-  getAllTaskApi: apiBaseUrl + "/task-router/get-all-task",
-  updateTaskApi: apiBaseUrl + "/task-router/update-task-list",
+  uploadTaskImageApi: data?.apiBaseUrl + "/task-router/upload-task-image",
+  getAllTaskApi: data?.apiBaseUrl + "/task-router/get-all-task",
+  updateTaskApi: data?.apiBaseUrl + "/task-router/update-task-list",
 };
