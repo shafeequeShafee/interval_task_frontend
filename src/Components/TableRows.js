@@ -123,16 +123,7 @@ function TableRows({
               accept=".png,.jpeg,.jpg"
               hidden
             />
-            {/* <ol>
-              {image &&
-                image.map((file, i) => {
-                  return (
-                    <li key={i} className="uploaded-file-name" title={file}>
-                      {file}
-                    </li>
-                  );
-                })}
-            </ol> */}
+ 
           </td>
 
           <td className="delete-task">

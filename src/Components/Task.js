@@ -11,8 +11,10 @@ import TaskImgPopup from "./TaskImgPopup.js";
 
 function Task() {
   const [taskData, setTaskData] = useState([]);
+  const [dupliacteTaskData, setDuplicateTaskData] = useState([]);
   const [showPopUp, setShowPopUp] = useState(false);
   const [individualTaskData, setIndividualTaskData] = useState({});
+  const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
     getAllTask()
@@ -35,6 +37,7 @@ function Task() {
               taskList.push(task);
             });
           setTaskData([...taskList]);
+          setDuplicateTaskData([...taskList]);
         } else {
           toast.warning("No data found");
         }
@@ -151,6 +154,18 @@ function Task() {
     setIndividualTaskData({ ...popupData });
     setShowPopUp(true);
   };
+  const filterByPriority = (e) => {
+    let filteredTasks = dupliacteTaskData?.filter((data) => {
+      if (e?.target?.value === "") {
+        return data;
+      } else {
+        return data.priority.toLowerCase() === e.target.value.toLowerCase();
+      }
+    });
+    setFilterValue(e?.target?.value);
+    setTaskData([...filteredTasks]);
+  };
+
   return (
     <>
       {showPopUp && (
@@ -174,6 +189,22 @@ function Task() {
                   Add Task
                 </button>
               </h3>
+            </div>
+            <div className="filter-container">
+              <div>Filter :</div>
+              <div>
+                <select
+                  name="filter-priority"
+                  className=""
+                  value={filterValue}
+                  onChange={(e) => filterByPriority(e)}
+                >
+                  <option value="">-- Select --</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High </option>
+                </select>
+              </div>
             </div>
             <div className="task-body">
               <table className="item-table">
